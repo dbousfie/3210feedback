@@ -108,7 +108,3 @@ serve(async (req: Request): Promise<Response> => {
     },
   });
 });
-
-console.log("DEBUG: syllabus first line →", (syllabus?.split("\n")[0]) || "undefined");
-
-
