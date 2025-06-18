@@ -37,7 +37,7 @@ serve(async (req: Request): Promise<Response> => {
     return new Response("Missing Azure API key", { status: 500 });
   }
 
-  const syllabus = await Deno.readTextFile("syllabus2025.txt").catch(() =>
+  const syllabus = await Deno.readTextFile("syllabus.txt").catch(() =>
     "Error loading syllabus."
   );
 
@@ -49,7 +49,7 @@ serve(async (req: Request): Promise<Response> => {
     },
     {
       role: "system",
-      content: `Here is important context from syllabus2025.txt:\n${syllabus}`,
+      content: `Here is important context from syllabus.txt:\n${syllabus}`,
     },
     {
       role: "user",
