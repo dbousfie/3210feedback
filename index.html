@@ -27,16 +27,17 @@
 <body>
   <h2> feedback mechanism</h2>
 <form id="queryForm">
-  <label for="instructor">Reviewer Essay Comments:</label><br />
+  <label for="instructor">Reviewer Essay Comments (never include personal identifiers):</label><br />
   <textarea name="instructor" id="instructor" rows="4" cols="60" placeholder="Enter your comments here..."></textarea><br /><br />
 
-  <label for="essay">Essay for submission:</label><br />
-  <textarea name="essay" id="essay" rows="10" cols="60" placeholder="Paste the student essay here..."></textarea><br /><br />
+  <label for="essay">Essay for submission (never include personal identifiers):</label><br />
+  <textarea name="essay" id="essay" rows="10" cols="60" placeholder="Paste the essay to be assessed here..."></textarea><br /><br />
 
-  <button type="submit">Submit - all submissions and responses are stored with qualtrics - NEVER include any personal identifiers</button>
+  <button type="submit">Submit</button>
 </form>
 
   <h3>Response:</h3>
+  <h5>all submissions and responses are anonymously stored with qualtrics</h5>
   <pre id="response"></pre>
 
 <script>
