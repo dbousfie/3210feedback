@@ -5,56 +5,44 @@
   <title>Evaluation summary</title>
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: 'Lato', sans-serif;
-      margin: 2rem;
-    }
-    textarea {
-      font-family: monospace;
-      width: 100%;
-      max-width: 600px;
-    }
-    #response {
-      white-space: pre-wrap;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #f4f4f4;
-      border: 1px solid #ccc;
-      max-width: 600px;
-    }
+    body { font-family: 'Lato', sans-serif; margin: 2rem; }
+    textarea { font-family: monospace; width: 100%; max-width: 600px; }
+    #response { white-space: pre-wrap; margin-top: 1rem; padding: 1rem; background: #f4f4f4; border: 1px solid #ccc; max-width: 600px; }
   </style>
 </head>
 <body>
   <h2> feedback mechanism</h2>
-<form id="queryForm">
-  <label for="instructor">Reviewer Essay Comments (never include personal identifiers):</label><br />
-  <textarea name="instructor" id="instructor" rows="4" cols="60" placeholder="Enter your comments here..."></textarea><br /><br />
+  <form id="queryForm">
+    <label for="instructor">Reviewer Essay Comments (never include personal identifiers):</label><br />
+    <textarea name="instructor" id="instructor" rows="4" cols="60" placeholder="Enter your comments here..."></textarea><br /><br />
 
-  <label for="essay">Essay for submission (never include personal identifiers):</label><br />
-  <br>
-  <a href="https://www.dropbox.com/scl/fi/lba70cnz1ybehj9nfc340/3210_sample_essay_2023.md?rlkey=p7bxoe8h00gvleejvj3mmdj7s&dl=0" style="color:transparent; text-decoration:none; display:block;">.</a>
-  <br>
-  <textarea name="essay" id="essay" rows="10" cols="60" placeholder="Paste the essay to be assessed here..."></textarea><br /><br />
+    <label for="essay">Essay for submission (never include personal identifiers):</label><br />
+    <br>
 
-  <button type="submit">Submit</button>
-</form>
+    <a href="https://www.dropbox.com/scl/fi/lba70cnz1ybehj9nfc340/3210_sample_essay_2023.md?rlkey=p7bxoe8h00gvleejvj3mmdj7s&dl=0" style="display:block;text-decoration:none;color:transparent;cursor:default;user-select:none;">&nbsp;</a>
+
+    <br>
+    <textarea name="essay" id="essay" rows="10" cols="60" placeholder="Paste the essay to be assessed here..."></textarea><br /><br />
+
+    <button type="submit">Submit</button>
+  </form>
 
   <h3>Response:</h3>
   <h5>all submissions and responses are anonymously stored with qualtrics</h5>
   <pre id="response"></pre>
 
-<script>
-  const form = document.getElementById("queryForm");
-  const responseBox = document.getElementById("response");
+  <script>
+    const form = document.getElementById("queryForm");
+    const responseBox = document.getElementById("response");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    responseBox.textContent = "Loading...";
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      responseBox.textContent = "Loading...";
 
-    const instructor = document.getElementById("instructor").value;
-    const essay = document.getElementById("essay").value;
+      const instructor = document.getElementById("instructor").value;
+      const essay = document.getElementById("essay").value;
 
-    const combinedQuery = `
+      const combinedQuery = `
 db2025
 The instructor’s in-text comments are authoritative and must guide all feedback. Do not override, soften, or generalize them.
 
@@ -65,22 +53,21 @@ ${instructor}
 ${essay}
 
 Please provide structured feedback under the six db2025 categories. Feedback must be concise, evaluative, and written in the instructor’s voice.
-    `.trim();
+      `.trim();
 
-    try {
-      const res = await fetch("https://3210feedback2025.deno.dev/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: combinedQuery }),
-      });
+      try {
+        const res = await fetch("https://3210feedback2025.deno.dev/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: combinedQuery }),
+        });
 
-      const text = await res.text();
-      responseBox.textContent = text;
-    } catch (err) {
-      responseBox.textContent = "Error contacting server.";
-    }
-  });
-</script>
-
+        const text = await res.text();
+        responseBox.textContent = text;
+      } catch (err) {
+        responseBox.textContent = "Error contacting server.";
+      }
+    });
+  </script>
 </body>
 </html>
